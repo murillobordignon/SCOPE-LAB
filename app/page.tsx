@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, CSSProperties } from 'react';
 
 interface Laboratorio {
   id: number;
@@ -14,11 +14,9 @@ interface Laboratorio {
 
 export default function ScopeLabHome() {
   const [tipoUsuario, setTipoUsuario] = useState<string>('');
-
   const [senhaInput, setSenhaInput] = useState<string>('');
   const [mostrarModalSenha, setMostrarModalSenha] = useState<boolean>(false);
   const [erroSenha, setErroSenha] = useState<string>('');
-
   const [mostrarCreditos, setMostrarCreditos] = useState<boolean>(false);
 
   const [labs, setLabs] = useState<Laboratorio[]>([
@@ -118,33 +116,155 @@ export default function ScopeLabHome() {
     setLabs(listaFiltrada);
   }
 
+  // ESTILOS VISUAIS EMBUTIDOS
+  const styles: { [key: string]: CSSProperties } = {
+    main: {
+      minHeight: '100vh',
+      backgroundColor: '#0f172a',
+      color: '#f8fafc',
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '24px',
+      boxSizing: 'border-box'
+    },
+    cardLogin: {
+      backgroundColor: '#1e293b',
+      padding: '32px',
+      borderRadius: '16px',
+      border: '1px solid #334155',
+      width: '100%',
+      maxWidth: '400px',
+      textAlign: 'center',
+      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5)'
+    },
+    btnBlue: {
+      backgroundColor: '#2563eb',
+      color: '#ffffff',
+      border: 'none',
+      padding: '12px 20px',
+      borderRadius: '8px',
+      fontWeight: 600,
+      cursor: 'pointer',
+      width: '100%',
+      fontSize: '14px',
+      transition: 'background-color 0.2s'
+    },
+    btnGray: {
+      backgroundColor: '#334155',
+      color: '#ffffff',
+      border: 'none',
+      padding: '12px 20px',
+      borderRadius: '8px',
+      fontWeight: 600,
+      cursor: 'pointer',
+      width: '100%',
+      fontSize: '14px'
+    },
+    btnRed: {
+      backgroundColor: '#dc2626',
+      color: '#ffffff',
+      border: 'none',
+      padding: '8px 16px',
+      borderRadius: '8px',
+      fontWeight: 'bold',
+      cursor: 'pointer',
+      fontSize: '12px'
+    },
+    input: {
+      width: '100%',
+      padding: '10px 12px',
+      backgroundColor: '#0f172a',
+      border: '1px solid #334155',
+      borderRadius: '8px',
+      color: '#ffffff',
+      fontSize: '14px',
+      boxSizing: 'border-box',
+      outline: 'none'
+    },
+    modalOverlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0,0,0,0.75)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '16px',
+      zIndex: 1000
+    },
+    modalContent: {
+      backgroundColor: '#1e293b',
+      padding: '24px',
+      borderRadius: '16px',
+      border: '1px solid #334155',
+      width: '100%',
+      maxWidth: '400px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '12px'
+    },
+    grid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+      gap: '16px',
+      width: '100%',
+      maxWidth: '900px'
+    },
+    labCard: {
+      backgroundColor: '#1e293b',
+      padding: '20px',
+      borderRadius: '12px',
+      border: '1px solid #334155',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between'
+    },
+    badgeLivre: {
+      backgroundColor: 'rgba(16, 185, 129, 0.2)',
+      color: '#34d399',
+      padding: '4px 8px',
+      borderRadius: '4px',
+      fontSize: '11px',
+      fontWeight: 'bold',
+      textTransform: 'uppercase'
+    },
+    badgeOcupado: {
+      backgroundColor: 'rgba(244, 63, 94, 0.2)',
+      color: '#fb7185',
+      padding: '4px 8px',
+      borderRadius: '4px',
+      fontSize: '11px',
+      fontWeight: 'bold',
+      textTransform: 'uppercase'
+    }
+  };
+
   return (
-    <main className="min-h-screen bg-slate-900 text-white p-6 flex flex-col items-center justify-center font-sans relative">
+    <main style={styles.main}>
       
       {/* 1. TELA DE LOGIN */}
       {tipoUsuario === '' && (
-        <div className="bg-slate-800 p-8 rounded-xl border border-slate-700 w-full max-w-md text-center shadow-2xl">
-          <h1 className="text-2xl font-bold mb-2">ScopeLab</h1>
-          <p className="text-slate-400 text-sm mb-6">Escolha o seu tipo de acesso:</p>
+        <div style={styles.cardLogin}>
+          <h1 style={{ fontSize: '28px', fontWeight: 'bold', marginBottom: '8px', color: '#60a5fa' }}>ScopeLab</h1>
+          <p style={{ color: '#94a3b8', fontSize: '14px', marginBottom: '24px' }}>Escolha o seu tipo de acesso:</p>
 
-          <div className="flex flex-col gap-4">
-            <button
-              onClick={logarComoAluno}
-              className="bg-slate-700 hover:bg-slate-600 p-4 rounded-lg font-semibold text-left transition"
-            >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <button onClick={logarComoAluno} style={styles.btnGray}>
               Entrar como Aluno / Visitante
             </button>
 
-            <button
-              onClick={() => setMostrarModalSenha(true)}
-              className="bg-blue-600 hover:bg-blue-500 p-4 rounded-lg font-semibold text-left transition"
-            >
+            <button onClick={() => setMostrarModalSenha(true)} style={styles.btnBlue}>
               Entrar como Representante
             </button>
 
             <button
               onClick={() => setMostrarCreditos(true)}
-              className="text-xs text-slate-400 hover:text-white pt-2 underline transition"
+              style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: '12px', cursor: 'pointer', textDecoration: 'underline', marginTop: '8px' }}
             >
               Desenvolvedores do Projeto
             </button>
@@ -152,80 +272,61 @@ export default function ScopeLabHome() {
         </div>
       )}
 
-      {/* 2. PAINEL PRINCIPAL (ALUNO E REPRESENTANTE) */}
+      {/* 2. PAINEL PRINCIPAL */}
       {tipoUsuario !== '' && (
-        <div className="w-full max-w-4xl">
-          <header className="flex justify-between items-center bg-slate-800 p-4 rounded-xl border border-slate-700 mb-6">
+        <div style={{ width: '100%', maxWidth: '900px' }}>
+          <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#1e293b', padding: '16px 24px', borderRadius: '12px', border: '1px solid #334155', marginBottom: '24px' }}>
             <div>
-              <h1 className="text-xl font-bold">ScopeLab - Painel</h1>
-              <p className="text-xs text-slate-400">
-                Logado como: <strong className="text-blue-400 uppercase">{tipoUsuario}</strong>
+              <h1 style={{ fontSize: '20px', fontWeight: 'bold', margin: 0 }}>ScopeLab - Painel</h1>
+              <p style={{ fontSize: '12px', color: '#94a3b8', margin: '4px 0 0 0' }}>
+                Logado como: <strong style={{ color: '#60a5fa', textTransform: 'uppercase' }}>{tipoUsuario}</strong>
               </p>
             </div>
 
-            <div className="flex gap-2">
-              <button
-                onClick={() => setMostrarCreditos(true)}
-                className="bg-slate-700 hover:bg-slate-600 text-xs px-3 py-2 rounded-lg"
-              >
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => setMostrarCreditos(true)} style={{ ...styles.btnGray, padding: '8px 12px', fontSize: '12px', width: 'auto' }}>
                 Créditos
               </button>
               {tipoUsuario === 'representante' && (
-                <button
-                  onClick={() => setMostrarModalNovoLab(true)}
-                  className="bg-blue-600 hover:bg-blue-500 text-xs px-3 py-2 rounded-lg font-bold"
-                >
+                <button onClick={() => setMostrarModalNovoLab(true)} style={{ ...styles.btnBlue, padding: '8px 12px', fontSize: '12px', width: 'auto' }}>
                   + Criar Novo Lab
                 </button>
               )}
-              <button
-                onClick={deslogar}
-                className="bg-red-600 hover:bg-red-500 text-xs px-3 py-2 rounded-lg font-bold"
-              >
+              <button onClick={deslogar} style={styles.btnRed}>
                 Sair
               </button>
             </div>
           </header>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div style={styles.grid}>
             {labs.map((lab) => (
-              <div key={lab.id} className="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col justify-between shadow-lg">
+              <div key={lab.id} style={styles.labCard}>
                 <div>
-                  <div className="flex justify-between items-center mb-3">
-                    <h2 className="font-bold text-lg">{lab.nome}</h2>
-                    <span
-                      className={`text-xs px-2 py-1 rounded font-bold uppercase ${
-                        lab.status === 'livre' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'
-                      }`}
-                    >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: 0 }}>{lab.nome}</h2>
+                    <span style={lab.status === 'livre' ? styles.badgeLivre : styles.badgeOcupado}>
                       {lab.status}
                     </span>
                   </div>
 
                   {lab.status === 'ocupado' ? (
-                    <div className="text-xs space-y-1 text-slate-300 my-3">
-                      <p><strong>Professor:</strong> {lab.professor}</p>
-                      <p><strong>Disciplina:</strong> {lab.disciplina}</p>
-                      <p><strong>Horário:</strong> {lab.horario}</p>
-                      <p><strong>Obs:</strong> {lab.obs}</p>
+                    <div style={{ fontSize: '13px', color: '#cbd5e1', display: 'flex', flexDirection: 'column', gap: '4px', margin: '12px 0' }}>
+                      <p style={{ margin: 0 }}><strong>Prof:</strong> {lab.professor}</p>
+                      <p style={{ margin: 0 }}><strong>Disciplina:</strong> {lab.disciplina}</p>
+                      <p style={{ margin: 0 }}><strong>Horário:</strong> {lab.horario}</p>
+                      <p style={{ margin: 0 }}><strong>Obs:</strong> {lab.obs}</p>
                     </div>
                   ) : (
-                    <p className="text-xs text-slate-400 my-4">Laboratório disponível para uso.</p>
+                    <p style={{ fontSize: '13px', color: '#64748b', margin: '16px 0' }}>Laboratório disponível para uso.</p>
                   )}
                 </div>
 
                 {tipoUsuario === 'representante' && (
-                  <div className="flex flex-col gap-2 mt-4">
-                    <button
-                      onClick={() => acaoBotaoLab(lab)}
-                      className="bg-blue-600 hover:bg-blue-500 text-xs py-2 rounded font-semibold"
-                    >
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
+                    <button onClick={() => acaoBotaoLab(lab)} style={{ ...styles.btnBlue, padding: '8px', fontSize: '12px' }}>
                       {lab.status === 'ocupado' ? 'Liberar Sala' : 'Ocupar Sala'}
                     </button>
-                    <button
-                      onClick={() => excluirLab(lab.id)}
-                      className="bg-slate-700 hover:bg-red-600 text-xs py-1.5 rounded"
-                    >
+                    <button onClick={() => excluirLab(lab.id)} style={{ ...styles.btnGray, padding: '6px', fontSize: '12px', backgroundColor: '#475569' }}>
                       Excluir Lab
                     </button>
                   </div>
@@ -236,137 +337,77 @@ export default function ScopeLabHome() {
         </div>
       )}
 
-      {/* JANELA MODAL: CRÉDITOS */}
+      {/* MODAL CRÉDITOS */}
       {mostrarCreditos && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-          <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 w-full max-w-md space-y-4 shadow-2xl text-center">
-            <h2 className="font-bold text-xl text-blue-400">Desenvolvedores do ScopeLab</h2>
-            <p className="text-xs text-slate-400">Projeto desenvolvido pelos alunos:</p>
-            
-            <div className="bg-slate-900 p-4 rounded-lg border border-slate-700 text-sm space-y-2 text-left">
-              <p className="font-semibold text-slate-200">• Murillo Bordignon Castilho Rodrigues Luricy</p>
-              <p className="font-semibold text-slate-200">• Victória Bordignon Castilho Rodrigues Luricy</p>
+        <div style={styles.modalOverlay}>
+          <div style={styles.modalContent}>
+            <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: '#60a5fa', textAlign: 'center', margin: 0 }}>Desenvolvedores</h2>
+            <div style={{ backgroundColor: '#0f172a', padding: '12px', borderRadius: '8px', fontSize: '13px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <p style={{ margin: 0 }}>• Murillo Bordignon Castilho Rodrigues Luricy</p>
+              <p style={{ margin: 0 }}>• Victória Bordignon Castilho Rodrigues Luricy</p>
             </div>
-
-            <button
-              onClick={() => setMostrarCreditos(false)}
-              className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded text-xs font-bold w-full"
-            >
-              Fechar
-            </button>
+            <button onClick={() => setMostrarCreditos(false)} style={styles.btnBlue}>Fechar</button>
           </div>
         </div>
       )}
 
-      {/* JANELA MODAL: SENHA DO REPRESENTANTE */}
+      {/* MODAL SENHA */}
       {mostrarModalSenha && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-          <form onSubmit={tentarLogarRepresentante} className="bg-slate-800 p-6 rounded-xl border border-slate-700 w-full max-w-sm space-y-4">
-            <h2 className="font-bold text-lg">Senha do Representante</h2>
+        <div style={styles.modalOverlay}>
+          <form onSubmit={tentarLogarRepresentante} style={styles.modalContent}>
+            <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: 0 }}>Senha do Representante</h2>
             <input
               type="password"
               placeholder="Digite 123"
               value={senhaInput}
               onChange={(e) => setSenhaInput(e.target.value)}
-              className="w-full p-2 bg-slate-900 border border-slate-700 rounded text-sm text-white"
+              style={styles.input}
               autoFocus
             />
-            {erroSenha && <p className="text-red-400 text-xs">{erroSenha}</p>}
-            <div className="flex justify-end gap-2">
-              <button
-                type="button"
-                onClick={() => setMostrarModalSenha(false)}
-                className="bg-slate-700 px-3 py-1.5 rounded text-xs"
-              >
-                Cancelar
-              </button>
-              <button type="submit" className="bg-blue-600 px-3 py-1.5 rounded text-xs font-bold">
-                Entrar
-              </button>
+            {erroSenha && <p style={{ color: '#f87171', fontSize: '12px', margin: 0 }}>{erroSenha}</p>}
+            <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end', marginTop: '8px' }}>
+              <button type="button" onClick={() => setMostrarModalSenha(false)} style={{ ...styles.btnGray, width: 'auto', padding: '8px 16px' }}>Cancelar</button>
+              <button type="submit" style={{ ...styles.btnBlue, width: 'auto', padding: '8px 16px' }}>Entrar</button>
             </div>
           </form>
         </div>
       )}
 
-      {/* JANELA MODAL: ADICIONAR NOVO LAB */}
+      {/* MODAL NOVO LAB */}
       {mostrarModalNovoLab && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-          <form onSubmit={adicionarLab} className="bg-slate-800 p-6 rounded-xl border border-slate-700 w-full max-w-sm space-y-4">
-            <h2 className="font-bold text-lg">Criar Novo Laboratório</h2>
+        <div style={styles.modalOverlay}>
+          <form onSubmit={adicionarLab} style={styles.modalContent}>
+            <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: 0 }}>Criar Novo Laboratório</h2>
             <input
               type="text"
               placeholder="Ex: Lab 04"
               value={novoNome}
               onChange={(e) => setNovoNome(e.target.value)}
-              className="w-full p-2 bg-slate-900 border border-slate-700 rounded text-sm text-white"
+              style={styles.input}
               required
               autoFocus
             />
-            <div className="flex justify-end gap-2">
-              <button
-                type="button"
-                onClick={() => setMostrarModalNovoLab(false)}
-                className="bg-slate-700 px-3 py-1.5 rounded text-xs"
-              >
-                Cancelar
-              </button>
-              <button type="submit" className="bg-blue-600 px-3 py-1.5 rounded text-xs font-bold">
-                Cadastrar
-              </button>
+            <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end', marginTop: '8px' }}>
+              <button type="button" onClick={() => setMostrarModalNovoLab(false)} style={{ ...styles.btnGray, width: 'auto', padding: '8px 16px' }}>Cancelar</button>
+              <button type="submit" style={{ ...styles.btnBlue, width: 'auto', padding: '8px 16px' }}>Cadastrar</button>
             </div>
           </form>
         </div>
       )}
 
-      {/* JANELA MODAL: PREENCHER DADOS DA AULA */}
+      {/* MODAL OCUPAR */}
       {labSelecionadoId !== null && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-          <form onSubmit={salvarOcupacao} className="bg-slate-800 p-6 rounded-xl border border-slate-700 w-full max-w-md space-y-3">
-            <h2 className="font-bold text-lg">Ocupar Laboratório</h2>
+        <div style={styles.modalOverlay}>
+          <form onSubmit={salvarOcupacao} style={styles.modalContent}>
+            <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: 0 }}>Ocupar Laboratório</h2>
+            <input type="text" placeholder="Nome do Professor" value={profInput} onChange={(e) => setProfInput(e.target.value)} style={styles.input} required />
+            <input type="text" placeholder="Nome da Disciplina" value={discInput} onChange={(e) => setDiscInput(e.target.value)} style={styles.input} required />
+            <input type="text" placeholder="Horário (ex: 07:30 - 09:10)" value={horarioInput} onChange={(e) => setHorarioInput(e.target.value)} style={styles.input} required />
+            <input type="text" placeholder="Observação" value={obsInput} onChange={(e) => setObsInput(e.target.value)} style={styles.input} />
 
-            <input
-              type="text"
-              placeholder="Nome do Professor"
-              value={profInput}
-              onChange={(e) => setProfInput(e.target.value)}
-              className="w-full p-2 bg-slate-900 border border-slate-700 rounded text-sm text-white"
-              required
-            />
-            <input
-              type="text"
-              placeholder="Nome da Disciplina"
-              value={discInput}
-              onChange={(e) => setDiscInput(e.target.value)}
-              className="w-full p-2 bg-slate-900 border border-slate-700 rounded text-sm text-white"
-              required
-            />
-            <input
-              type="text"
-              placeholder="Horário (ex: 07:30 - 09:10)"
-              value={horarioInput}
-              onChange={(e) => setHorarioInput(e.target.value)}
-              className="w-full p-2 bg-slate-900 border border-slate-700 rounded text-sm text-white"
-              required
-            />
-            <input
-              type="text"
-              placeholder="Observação"
-              value={obsInput}
-              onChange={(e) => setObsInput(e.target.value)}
-              className="w-full p-2 bg-slate-900 border border-slate-700 rounded text-sm text-white"
-            />
-
-            <div className="flex justify-end gap-2 pt-2">
-              <button
-                type="button"
-                onClick={() => setLabSelecionadoId(null)}
-                className="bg-slate-700 px-3 py-1.5 rounded text-xs"
-              >
-                Cancelar
-              </button>
-              <button type="submit" className="bg-blue-600 px-3 py-1.5 rounded text-xs font-bold">
-                Salvar Dados
-              </button>
+            <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end', marginTop: '8px' }}>
+              <button type="button" onClick={() => setLabSelecionadoId(null)} style={{ ...styles.btnGray, width: 'auto', padding: '8px 16px' }}>Cancelar</button>
+              <button type="submit" style={{ ...styles.btnBlue, width: 'auto', padding: '8px 16px' }}>Salvar Dados</button>
             </div>
           </form>
         </div>
