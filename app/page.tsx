@@ -20,9 +20,9 @@ export default function ScopeLabHome() {
   const [mostrarCreditos, setMostrarCreditos] = useState<boolean>(false);
 
   const [labs, setLabs] = useState<Laboratorio[]>([
-    { id: 1, nome: 'Lab 01', status: 'ocupado', professor: 'Prof. Carlos', disciplina: 'Programação Web', horario: '07:30 - 09:10', obs: 'Trazer notebook' },
+    { id: 1, nome: 'Lab 01', status: 'ocupado', professor: 'Prof. Romildo', disciplina: 'TICS I', horario: '07:30 - 09:10', obs: 'Trazer notebook' },
     { id: 2, nome: 'Lab 02', status: 'livre', professor: '', disciplina: '', horario: '', obs: 'Sala livre' },
-    { id: 3, nome: 'EAD', status: 'ocupado', professor: 'Profª. Fernanda', disciplina: 'Banco de Dados', horario: '09:30 - 11:10', obs: 'Aula prática' }
+    { id: 3, nome: 'EAD', status: 'ocupado', professor: 'Prof. Carlos Alberto', disciplina: 'WEB I', horario: '07:30 - 09:10', obs: 'Aula prática' }
   ]);
 
   const [novoNome, setNovoNome] = useState<string>('');
