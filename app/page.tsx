@@ -21,7 +21,6 @@ export default function ScopeLabHome() {
 
   const [mostrarCreditos, setMostrarCreditos] = useState<boolean>(false);
 
-  // Lista de laboratórios com o Lab 03 alterado para EAD
   const [labs, setLabs] = useState<Laboratorio[]>([
     { id: 1, nome: 'Lab 01', status: 'ocupado', professor: 'Prof. Carlos', disciplina: 'Programação Web', horario: '07:30 - 09:10', obs: 'Trazer notebook' },
     { id: 2, nome: 'Lab 02', status: 'livre', professor: '', disciplina: '', horario: '', obs: 'Sala livre' },
@@ -298,7 +297,7 @@ export default function ScopeLabHome() {
               type="text"
               placeholder="Ex: Lab 04"
               value={novoNome}
-              onChange={(e) => setNewNome(e.target.value)}
+              onChange={(e) => setNovoNome(e.target.value)}
               className="w-full p-2 bg-slate-900 border border-slate-700 rounded text-sm text-white"
               required
               autoFocus
